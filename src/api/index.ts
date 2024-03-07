@@ -1,7 +1,7 @@
 import axios, { AxiosResponse} from "axios";
 import {Product} from "../types";
 
-axios.defaults.baseURL = "http://makeup-api.herokuapp.com/api/v1"
+axios.defaults.baseURL = "https://makeup-api.herokuapp.com/api/v1"
 export const api = {
      getProducts: async () => {
         try {
