@@ -5,11 +5,31 @@ import {Image, Progress, Table, Tooltip} from "antd";
 export const HomeScreen = () => {
     const {products, error, loading} = useProducts()
 
+    const typeFilter =  Array.from(new Set(products.map((product) => product.product_type))).map((type) => {
+        return {
+            text: type,
+            value: type
+        }
+    })
+    const brandFilter = Array.from(new Set(products.map((product) => product.brand))).map((type) => {
+        return {
+            text: type,
+            value: type
+        }
+    })
+    const categoryFilter = Array.from(new Set(products.map((product) => product.category))).map((type) => {
+        return {
+            text: type,
+            value: type
+        }
+    })
+
     const columns = [
             {
                 title: 'Name',
                 dataIndex: 'name',
                 key: 'name',
+                render: (text: string) => <div className="w-80 text-wrap">{text}</div>
             },
             {
                 title: 'Image',
@@ -27,21 +47,28 @@ export const HomeScreen = () => {
                 title: 'Category',
                 dataIndex: 'category',
                 key: 'category',
+                filters: categoryFilter,
+                onFilter: (value: any, record: any) => record.category.indexOf(value) === 0,
             },
             {
                 title: 'Brand',
                 dataIndex: 'brand',
                 key: 'brand',
+                filters:brandFilter,
+                onFilter: (value: any, record: any) => record.brand.indexOf(value) === 0,
             },
             {
                 title: 'Price',
                 dataIndex: 'price',
                 key: 'price',
+                sorter: (a: any, b: any) => parseFloat(a.price) - parseFloat(b.price),
             },
             {
-                title: 'Product type',
+                title: 'Type',
                 dataIndex: 'product_type',
                 key: 'product_type',
+                filters: typeFilter,
+                onFilter: (value: any, record: any) => record.product_type.indexOf(value) === 0,
             },
             Table.EXPAND_COLUMN,
             {
